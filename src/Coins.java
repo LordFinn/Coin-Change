@@ -30,7 +30,17 @@ public class Coins {
     }
 
     public static void main(String[] args) {
-        // TODO: create some examples here
+
+        List<Integer> cents = List.of(1,2,5,10,20,50);
+        System.out.println(calculateMinimalCoins(8, cents));
+        System.out.println(calculateMinimalCoins(42, cents));
+        System.out.println(calculateMinimalCoins(273, cents));
+
+        List<Integer> notCents = List.of(12,1,18,3,5);
+        System.out.println(calculateMinimalCoins(8, notCents));
+        System.out.println(calculateMinimalCoins(42, notCents));
+        System.out.println(calculateMinimalCoins(273, notCents));
+
     }
 
 }
