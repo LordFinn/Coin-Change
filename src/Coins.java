@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class Coins {
 
@@ -61,6 +59,7 @@ public class Coins {
         return new HashSet<>(returnList).stream().toList(); // removes duplicates
     }
 
+    // collects solutions recursively (it would probably be better to do that dynamically too)
     private static List<List<Integer>> collectSolutions(int n, List<List<Integer>> nextCoins) {
         if (n == 0) {
             return new ArrayList<>();
@@ -85,24 +84,30 @@ public class Coins {
 
     public static void main(String[] args) {
 
-        List<Integer> cents = List.of(1,2,5,10,20,50);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please note that calculating all different solutions is a bit buggy for high values (>10k);");
+        System.out.println("for a more consistent analysis one may modify line 104 to calculate only one solution.");
+        System.out.println("Also note that user inputs are not checked for sanity, beware exceptions!\n");
 
-        System.out.println(calculateMinimalCoins(8, cents));
-        System.out.println(calculateMinimalCoins(42, cents));
-        System.out.println(calculateMinimalCoins(273, cents));
-
-        System.out.println(calculateAllMinimalCoins(8, cents));
-        System.out.println(calculateAllMinimalCoins(42, cents));
-        System.out.println(calculateAllMinimalCoins(273, cents));
-
-        List<Integer> notCents = List.of(12,1,18,3,5);
-        System.out.println(calculateMinimalCoins(8, notCents));
-        System.out.println(calculateMinimalCoins(42, notCents));
-        System.out.println(calculateMinimalCoins(273, notCents));
-
-        System.out.println(calculateAllMinimalCoins(8, notCents));
-        System.out.println(calculateAllMinimalCoins(42, notCents));
-        System.out.println(calculateAllMinimalCoins(273, notCents));
+        while (true) {
+            System.out.println("Please enter the different coin values (seperated by ,):");
+            List<Integer> coins = Arrays.stream(scanner.nextLine().split(","))
+                    .map(String::trim)
+                    .map(Integer::valueOf)
+                    .toList();
+            System.out.println("Your coins: " + coins);
+            System.out.println("Please enter a number to analyze or press enter to choose new coins:");
+            String number = scanner.nextLine();
+            while (!number.isEmpty()) {
+                int n = Integer.parseInt(number);
+                System.out.println("All optimal solutions for n = " + n + ":");
+                System.out.println(calculateAllMinimalCoins(n, coins));
+                System.out.println();
+                System.out.println("Please enter a number to analyze or press enter to choose new coins:");
+                number = scanner.nextLine();
+            }
+            System.out.println();
+        }
 
     }
 
